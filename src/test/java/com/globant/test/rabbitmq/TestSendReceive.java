@@ -19,7 +19,7 @@ public class TestSendReceive {
 		Producer sender = new Producer(queue, host);
 		Consumer reader = new Consumer(queue, host);
 		sender.send(this.message);
-		String messageReaded = reader.getMessage();
-		Assert.assertEquals(message, messageReaded);
+		String messageRead = reader.getMessage();
+		Assert.assertEquals(message, messageRead);
 	}
 }
