@@ -6,21 +6,17 @@ import com.rabbitmq.client.Channel;
 
 public class EmitLog {
 
-  private static final String EXCHANGE_NAME = "logs";
-
-  public void main(String argv) throws Exception {
+  public void main(String exchange_type, String exchange_name, String message, String severity) throws Exception {
 
     ConnectionFactory factory = new ConnectionFactory();
     factory.setHost("localhost");
     Connection connection = factory.newConnection();
     Channel channel = connection.createChannel();
 
-    channel.exchangeDeclare(EXCHANGE_NAME, "fanout");
+   	channel.exchangeDeclare(exchange_name, exchange_type);
 
-    String message = argv;
-
-    channel.basicPublish(EXCHANGE_NAME, "", null, message.getBytes());
-    System.out.println(" [x] Sent '" + message + "'");
+    channel.basicPublish(exchange_name, severity, null, message.getBytes());
+    System.out.println(" [x] Sent '" + severity + "':'" + message + "'");
 
     channel.close();
     connection.close();
